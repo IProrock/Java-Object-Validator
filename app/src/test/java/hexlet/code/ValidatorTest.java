@@ -1,8 +1,12 @@
 package hexlet.code;
+import hexlet.code.schemas.MapSchema;
 import hexlet.code.schemas.NumberSchema;
 import hexlet.code.schemas.StringSchema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,12 +15,14 @@ public class ValidatorTest {
     Validator validator;
     StringSchema stringSchema;
     NumberSchema numberSchema;
+    MapSchema mapSchema;
 
     @BeforeEach
     public void prepare() {
         validator = new Validator();
         stringSchema = validator.string();
         numberSchema = validator.number();
+        mapSchema = validator.map();
     }
 
     @Test
@@ -89,6 +95,46 @@ public class ValidatorTest {
         assertThat(numberSchema.isValid(10)).isEqualTo(true);
         assertThat(numberSchema.isValid(4)).isEqualTo(false);
         assertThat(numberSchema.isValid(11)).isEqualTo(false);
+    }
+
+    @Test
+    void validatorMapTestNoConditions() {
+        assertThat(mapSchema.isValid(null)).isEqualTo(true);
+        assertThat(mapSchema.isValid("Not MAP")).isEqualTo(true);
+    }
+
+    @Test
+    void validatorMapTestRequired() {
+
+        Map<String, String> data = new HashMap<>();
+        data.put("k1", "v1");
+
+        mapSchema.required();
+
+        assertThat(mapSchema.isValid(null)).isEqualTo(false);
+        assertThat(mapSchema.isValid("Not MAP")).isEqualTo(false);
+        assertThat(mapSchema.isValid(new HashMap())).isEqualTo(true);
+        assertThat(mapSchema.isValid(data)).isEqualTo(true);
+    }
+
+    @Test
+    void validatorMapTestRequiredSize() {
+
+        Map<String, String> data = new HashMap<>();
+        data.put("k1", "v1");
+
+        mapSchema.required();
+        mapSchema.sizeof(2);
+
+        assertThat(mapSchema.isValid(data)).isEqualTo(false);
+
+        data.put("k2", "v2");
+
+        assertThat(mapSchema.isValid(data)).isEqualTo(true);
+
+        data.put("k3", "v3");
+
+        assertThat(mapSchema.isValid(data)).isEqualTo(false);
     }
 
 }
