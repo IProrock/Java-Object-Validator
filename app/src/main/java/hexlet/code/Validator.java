@@ -5,24 +5,21 @@ import hexlet.code.schemas.NumberSchema;
 import hexlet.code.schemas.StringSchema;
 
 public class Validator {
-    StringSchema strSchema;
-    NumberSchema numberSchema;
-    MapSchema mapSchema;
 
     public StringSchema string() {
-        this.strSchema = new StringSchema();
+        StringSchema strSchema = new StringSchema();
 
         return strSchema;
     }
 
     public NumberSchema number() {
-        this.numberSchema = new NumberSchema();
+        NumberSchema numberSchema = new NumberSchema();
 
         return numberSchema;
     }
 
     public MapSchema map() {
-        this.mapSchema = new MapSchema();
+        MapSchema mapSchema = new MapSchema();
 
         return  mapSchema;
     }

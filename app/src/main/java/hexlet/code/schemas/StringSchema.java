@@ -11,6 +11,7 @@ public class StringSchema extends BaseSchema {
     public StringSchema required() {
         this.isEmptyValid = false;
         this.isNullValid = false;
+        super.strSchema = this;
 
         return this;
     }
@@ -19,6 +20,7 @@ public class StringSchema extends BaseSchema {
 
         this.contains = symbols;
         this.isNullValid = false;
+        super.strSchema = this;
 
         return this;
     }
@@ -79,6 +81,7 @@ public class StringSchema extends BaseSchema {
     public StringSchema minLength(int minLen) {
         this.isNullValid = false;
         this.minLength = minLen;
+        super.strSchema = this;
 
         return this;
     }

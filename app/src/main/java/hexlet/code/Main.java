@@ -1,60 +1,47 @@
 package hexlet.code;
-import hexlet.code.schemas.NumberSchema;
-import hexlet.code.schemas.StringSchema;
+import hexlet.code.schemas.BaseSchema;
+import hexlet.code.schemas.MapSchema;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Validator validator = new Validator();
-        StringSchema schema = validator.string();
-        System.out.println(schema.isValid("") + " Expected 1: True");
-        System.out.println(schema.isValid(null) + " Exp 2: True");
-        System.out.println(schema.isValid(5) + " Exp 2.1: False");
-
-        schema.required();
-
-        System.out.println(schema.isValid("what does the fox say") + " Exp 3: True");
-        System.out.println(schema.isValid("hexlet") + " Exp 4: True");
-        System.out.println(schema.isValid(null) + " Exp 5: False");
-        System.out.println(schema.isValid(5) + " Exp 6: False");
-        System.out.println(schema.isValid("") + " Exp 7: False");
-
-        validator = new Validator();
-        schema = validator.string();
-
-        System.out.println((schema.contains("wh").isValid("what does the fox say")) + " Exp 8: True");
-        System.out.println((schema.contains("what").isValid("what does the fox say")) + " Exp 9: True");
-        System.out.println((schema.contains("whatthe").isValid("what does the fox say")) + " Exp 10: False");
-        System.out.println((schema.isValid("what does the fox say")) + " Exp 11: False");
-
-        System.out.println(schema.isValid("") + " Expected 12: False");
-        System.out.println((schema.contains("wh").isValid(null)) + " Exp 13: False");
-
-
         Validator v = new Validator();
 
-        NumberSchema numSchema = v.number();
+        MapSchema schema = v.map();
 
-// Пока не вызван метод required(), null считается валидным
-        System.out.println(numSchema.isValid(null) + " NExp1: true");
-        System.out.println(numSchema.positive().isValid(null) + " NExp2: true");
+        Map<String, BaseSchema> schemas = new HashMap<>();
 
-        numSchema.required();
+        schemas.put("name", v.string().required());
 
-        System.out.println(numSchema.isValid(null) + " NExp3: False");
-        System.out.println(numSchema.isValid(10) + " NExp4: true"); // true
-        System.out.println(numSchema.isValid("5") + " Nexp5: false"); // false
-        System.out.println(numSchema.isValid(-10) + " Nexp6: false"); // false
-//  Ноль - не положительное число
-        System.out.println(numSchema.isValid(0) + " Nexp7: false"); // false
+        schemas.put("age", v.number().positive());
+        schema.shape(schemas);
 
-        numSchema.range(5, 10);
+//        Map<String, Object> human1 = new HashMap<>();
+//        human1.put("name", "Kolya");
+//        human1.put("age", 100);
+//        System.out.println(schema.isValid(human1) + " Exp1: True"); // true
+//
+//        Map<String, Object> human2 = new HashMap<>();
+//        human2.put("name", "Maya");
+//        human2.put("age", null);
+//        System.out.println(schema.isValid(human2) + " Exp2: True"); // true
+//
+//        Map<String, Object> human3 = new HashMap<>();
+//        human3.put("name", "");
+//        human3.put("age", null);
+//        System.out.println(schema.isValid(human3) + " Exp3: false"); // false
 
-        System.out.println(numSchema.isValid(5) + " NExp8: true"); // true
-        System.out.println(numSchema.isValid(10) + " Nexp9 : true"); // true
-        System.out.println(numSchema.isValid(4) + " Nexp10: false"); // false
-        System.out.println(numSchema.isValid(11) + " Nexp11: false"); // false
+        Map<String, Object> human4 = new HashMap<>();
+        human4.put("name", "Valya");
+        human4.put("age", -5);
+        System.out.println(schema.isValid(human4) + " Exp4: False"); // false
+
+
+
 
     }
 }

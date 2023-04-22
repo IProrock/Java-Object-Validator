@@ -2,7 +2,11 @@ package hexlet.code.schemas;
 
 public class BaseSchema {
 
-    boolean isNullValid = true;
+    protected boolean isNullValid = true;
+    protected StringSchema strSchema;
+    protected NumberSchema numSchema;
+    protected MapSchema mapSchema;
+
 
     public BaseSchema required() {
         this.isNullValid = false;
@@ -14,6 +18,18 @@ public class BaseSchema {
 
         if (obj == null && !isNullValid) {
             return false;
+        }
+
+        if (strSchema != null) {
+            return strSchema.isValid(obj);
+        }
+
+        if (numSchema != null) {
+            return numSchema.isValid(obj);
+        }
+
+        if (mapSchema != null) {
+            return mapSchema.isValid(obj);
         }
 
         return true;

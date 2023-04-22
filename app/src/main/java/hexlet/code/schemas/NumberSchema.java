@@ -17,7 +17,7 @@ public class NumberSchema extends BaseSchema {
             return false;
         }
 
-        if ((Integer) intExpected <= 0 && !isNullValid) {
+        if ((Integer) intExpected <= 0 && !isNegativeValid) {
             return false;
         }
 
@@ -33,21 +33,25 @@ public class NumberSchema extends BaseSchema {
     public NumberSchema positive() {
 
         this.isNegativeValid = false;
+        super.numSchema = this;
 
         return this;
     }
 
-//    public NumberSchema required() {
-//
-//        this.isNullValid = false;
-//
-//        return this;
-//    }
+    @Override
+    public NumberSchema required() {
+
+        super.required();
+        super.numSchema = this;
+
+        return this;
+    }
 
     public NumberSchema range(int lowLimit, int upperLimit) {
 
         this.range[0] = lowLimit;
         this.range[1] = upperLimit;
+        super.numSchema = this;
 
         return this;
     }
