@@ -12,11 +12,11 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ValidatorTest {
-    Validator validator;
-    StringSchema stringSchema;
-    NumberSchema numberSchema;
-    MapSchema mapSchema;
+public final class ValidatorTest {
+    private Validator validator;
+    private StringSchema stringSchema;
+    private NumberSchema numberSchema;
+    private MapSchema mapSchema;
 
     @BeforeEach
     public void prepare() {

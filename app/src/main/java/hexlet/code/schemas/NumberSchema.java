@@ -1,8 +1,7 @@
 package hexlet.code.schemas;
 
-public class NumberSchema extends BaseSchema {
+public final class NumberSchema extends BaseSchema {
 
-//    private boolean isNullValid = true;
     private boolean isNegativeValid = false;
     private int[] range = new int[2];
 

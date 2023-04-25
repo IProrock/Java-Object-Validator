@@ -1,9 +1,8 @@
 package hexlet.code.schemas;
 
-public class StringSchema extends BaseSchema {
+public final class StringSchema extends BaseSchema {
     private String contains = "";
     private int minLength = -1;
-//    private Boolean isNullValid = true;
     private Boolean isEmptyValid = true;
 
 
@@ -29,22 +28,18 @@ public class StringSchema extends BaseSchema {
     public boolean isValid(Object expectedString) {
 
         if (expectedString == null) {
-//            System.out.println("Nullcheck");
             return isNullValid ? true : false;
         }
 
         if ((!(expectedString instanceof String))) {
-//            System.out.println("Instance");
             return false;
         }
 
         if (!(containsCheck((String) expectedString, this.contains))) {
-//            System.out.println("Contains");
             return false;
         }
 
         if (expectedString.equals("") && !isEmptyValid) {
-//            System.out.println("Empty");
             return false;
         }
 
